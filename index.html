@@ -352,6 +352,32 @@ footer {
   z-index: 100; transition: width 0.1s linear;
   width: 0%;
 }
+
+/* ── MOBILE BOTTOM NAV ── */
+.mobile-bottom-nav {
+  display: none;
+  position: fixed; bottom: 0; left: 0; right: 0; z-index: 9999;
+  background: #141410; border-top: 1px solid #2a2a22;
+  padding: 8px 0 env(safe-area-inset-bottom, 8px);
+}
+@media (max-width: 768px) {
+  .mobile-bottom-nav { display: flex; }
+  /* Stack header badge on very small screens */
+  header { flex-wrap: wrap; gap: 12px; padding-top: 32px; }
+}
+@media (max-width: 480px) {
+  header { flex-direction: column; align-items: flex-start; }
+  .header-badge { align-self: flex-start; }
+  .wrap { padding-bottom: 70px; }
+}
+.mbn-item {
+  flex: 1; display: flex; flex-direction: column; align-items: center;
+  gap: 3px; text-decoration: none; color: #888; padding: 4px 0;
+  font-family: sans-serif;
+}
+.mbn-item.active { color: #c9a84c; }
+.mbn-icon { font-size: 1.2rem; line-height: 1; }
+.mbn-label { font-size: 0.6rem; text-transform: uppercase; letter-spacing: 0.05em; }
 </style>
 </head>
 <body>
@@ -534,4 +560,35 @@ footer {
 
 <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
   window.addEventListener('scroll', () => {
-    const scrolled =
+    const scrolled =  const doc = document.documentElement;
+    const scrolled = doc.scrollTop;
+    const height = doc.scrollHeight - doc.clientHeight;
+    document.getElementById('scrollBar').style.width = (scrolled / height * 100) + '%';
+  });
+</script>
+
+<!-- MOBILE BOTTOM NAV -->
+<nav class="mobile-bottom-nav" id="mobileBottomNav">
+  <a href="index.html" class="mbn-item active">
+    <span class="mbn-icon">&#8962;</span>
+    <span class="mbn-label">Home</span>
+  </a>
+  <a href="pitch.html" class="mbn-item">
+    <span class="mbn-icon">&#128202;</span>
+    <span class="mbn-label">Pitch</span>
+  </a>
+  <a href="client-demo.html" class="mbn-item">
+    <span class="mbn-icon">&#128241;</span>
+    <span class="mbn-label">Demo</span>
+  </a>
+  <a href="admin.html" class="mbn-item">
+    <span class="mbn-icon">&#9874;&#65039;</span>
+    <span class="mbn-label">Admin</span>
+  </a>
+  <a href="notion.html" class="mbn-item">
+    <span class="mbn-icon">&#128194;</span>
+    <span class="mbn-label">Notion</span>
+  </a>
+</nav>
+</body>
+</html>

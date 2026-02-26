@@ -506,6 +506,42 @@
   .compare-table .price-row td.t3 { color: var(--tier3); }
   .compare-wrap { background: var(--card); border-radius: 20px; padding: 1.5rem; border: 1px solid var(--border); overflow-x: auto; }
 
+  /* ── MOBILE BOTTOM NAV ── */
+  .mobile-bottom-nav {
+    display: none;
+    position: fixed; bottom: 0; left: 0; right: 0; z-index: 9999;
+    background: #141414; border-top: 1px solid #2e2e2e;
+    padding: 8px 0 env(safe-area-inset-bottom, 8px);
+  }
+  @media (max-width: 768px) {
+    .mobile-bottom-nav { display: flex; }
+    /* Hide section nav links, show only logo + back link */
+    .nav-links { display: none; }
+    .nav-back-home { display: flex !important; }
+    nav { padding: 0 1rem; }
+    /* Sections scroll naturally, not fixed height */
+    section { min-height: auto; padding: 80px 1rem 80px; justify-content: flex-start; }
+    /* Padding so content clears bottom nav */
+    body { padding-bottom: 60px; }
+  }
+  .nav-back-home {
+    display: flex;
+    align-items: center;
+    font-size: 0.72rem; color: var(--text-muted); text-decoration: none;
+    padding: 0.4rem 0.75rem; border-radius: 6px;
+    border: 1px solid var(--border);
+    transition: all 0.2s;
+  }
+  .nav-back-home:hover { color: var(--gold); border-color: var(--gold); }
+  .mbn-item {
+    flex: 1; display: flex; flex-direction: column; align-items: center;
+    gap: 3px; text-decoration: none; color: #888; padding: 4px 0;
+    font-family: sans-serif;
+  }
+  .mbn-item.active { color: #c9a84c; }
+  .mbn-icon { font-size: 1.2rem; line-height: 1; }
+  .mbn-label { font-size: 0.6rem; text-transform: uppercase; letter-spacing: 0.05em; }
+
 </style>
 </head>
 <body>
@@ -523,6 +559,7 @@
     <a href="#" onclick="showSection('mindmap')" id="nav-mindmap">Map</a>
     <a href="#" onclick="showSection('nextsteps')" id="nav-nextsteps">Next Steps</a>
   </div>
+  <a href="index.html" class="nav-back-home">← Home</a>
   <div class="nav-badge">Feb 2026</div>
 </nav>
 
@@ -1163,5 +1200,29 @@
   setTimeout(drawLines, 300);
   window.addEventListener('resize', drawLines);
 </script>
+
+<!-- MOBILE BOTTOM NAV -->
+<nav class="mobile-bottom-nav" id="mobileBottomNav">
+  <a href="index.html" class="mbn-item">
+    <span class="mbn-icon">⌂</span>
+    <span class="mbn-label">Home</span>
+  </a>
+  <a href="pitch.html" class="mbn-item active">
+    <span class="mbn-icon">📊</span>
+    <span class="mbn-label">Pitch</span>
+  </a>
+  <a href="client-demo.html" class="mbn-item">
+    <span class="mbn-icon">📱</span>
+    <span class="mbn-label">Demo</span>
+  </a>
+  <a href="admin.html" class="mbn-item">
+    <span class="mbn-icon">⚒️</span>
+    <span class="mbn-label">Admin</span>
+  </a>
+  <a href="notion.html" class="mbn-item">
+    <span class="mbn-icon">🗂️</span>
+    <span class="mbn-label">Notion</span>
+  </a>
+</nav>
 </body>
 </html>

@@ -440,14 +440,45 @@ body {
 .insight-row .ins-icon { font-size: 1rem; flex-shrink: 0; margin-top: 1px; }
 .insight-row p { font-size: 0.75rem; color: var(--muted); line-height: 1.5; }
 .insight-row p strong { color: var(--cream); }
+
+/* ── MOBILE BOTTOM NAV ── */
+.mobile-bottom-nav {
+  display: none;
+  position: fixed; bottom: 0; left: 0; right: 0; z-index: 9999;
+  background: #141414; border-top: 1px solid #2a2a2a;
+  padding: 8px 0 env(safe-area-inset-bottom, 8px);
+}
+@media (max-width: 768px) {
+  .mobile-bottom-nav { display: flex; }
+  /* Scale phone to fit small screens */
+  .phone-frame {
+    max-width: 100%;
+    width: min(320px, calc(100vw - 32px));
+    min-width: unset;
+    transform-origin: top center;
+  }
+  .demo-wrap { padding-bottom: 70px; }
+  body { padding-bottom: 70px; }
+}
+.mbn-item {
+  flex: 1; display: flex; flex-direction: column; align-items: center;
+  gap: 3px; text-decoration: none; color: #888; padding: 4px 0;
+  font-family: sans-serif;
+}
+.mbn-item.active { color: #c9a84c; }
+.mbn-icon { font-size: 1.2rem; line-height: 1; }
+.mbn-label { font-size: 0.6rem; text-transform: uppercase; letter-spacing: 0.05em; }
 </style>
 </head>
 <body>
 
 <div class="top-bar">
-  <div>
-    <div class="label">Live Demo</div>
-    <div class="title">What Mandla's Customers Experience</div>
+  <div style="display:flex;align-items:center;gap:14px;">
+    <a href="index.html" style="font-size:0.72rem;color:#777;text-decoration:none;border:1px solid #2a2a2a;border-radius:6px;padding:4px 10px;white-space:nowrap;transition:color .15s,border-color .15s;" onmouseover="this.style.color='#c9a84c';this.style.borderColor='#c9a84c'" onmouseout="this.style.color='#777';this.style.borderColor='#2a2a2a'">← Home</a>
+    <div>
+      <div class="label">Live Demo</div>
+      <div class="title">What Mandla's Customers Experience</div>
+    </div>
   </div>
   <div class="mode-switcher">
     <button class="mode-btn active" onclick="setView('journey')">Journey</button>
@@ -960,5 +991,29 @@ body {
     }
   }
 </script>
+
+<!-- MOBILE BOTTOM NAV -->
+<nav class="mobile-bottom-nav" id="mobileBottomNav">
+  <a href="index.html" class="mbn-item">
+    <span class="mbn-icon">⌂</span>
+    <span class="mbn-label">Home</span>
+  </a>
+  <a href="pitch.html" class="mbn-item">
+    <span class="mbn-icon">📊</span>
+    <span class="mbn-label">Pitch</span>
+  </a>
+  <a href="client-demo.html" class="mbn-item active">
+    <span class="mbn-icon">📱</span>
+    <span class="mbn-label">Demo</span>
+  </a>
+  <a href="admin.html" class="mbn-item">
+    <span class="mbn-icon">⚒️</span>
+    <span class="mbn-label">Admin</span>
+  </a>
+  <a href="notion.html" class="mbn-item">
+    <span class="mbn-icon">🗂️</span>
+    <span class="mbn-label">Notion</span>
+  </a>
+</nav>
 </body>
 </html>

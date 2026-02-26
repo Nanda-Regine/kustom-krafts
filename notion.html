@@ -176,9 +176,67 @@ table.gantt .job-label{padding:5px 10px;white-space:nowrap;min-width:180px;}
 .bar-col{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;}
 .bar{width:100%;border-radius:3px 3px 0 0;}
 .bar-label{font-size:.6rem;color:var(--muted);}
+
+/* ── MOBILE FIXES ── */
+@media (max-width: 768px) {
+  html, body { overflow: auto !important; height: auto !important; }
+  body { display: block !important; }
+  .sb {
+    position: fixed; top: 0; left: 0; bottom: 0; z-index: 1000;
+    transform: translateX(-100%); transition: transform 0.3s ease;
+    height: 100vh !important;
+  }
+  .sb.open { transform: translateX(0); }
+  .sb-overlay {
+    display: none; position: fixed; inset: 0; z-index: 999;
+    background: rgba(0,0,0,0.3);
+  }
+  .sb-overlay.open { display: block; }
+  .mobile-header {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 10px 16px; background: #f7f7f5; border-bottom: 1px solid #e9e9e7;
+    position: sticky; top: 0; z-index: 100;
+  }
+  .mobile-header .brand { font-size: 0.85rem; font-weight: 600; color: #37352f; }
+  .hamburger { background: none; border: none; color: #9b9a97; font-size: 1.3rem; cursor: pointer; padding: 4px; }
+  .mobile-home-btn { font-size: 0.72rem; color: #9b9a97; text-decoration: none; border: 1px solid #e9e9e7; border-radius: 6px; padding: 4px 10px; transition: color 0.15s, border-color 0.15s; }
+  .mobile-home-btn:hover { color: #c9a84c; border-color: #c9a84c; }
+  .main { width: 100% !important; min-width: 0 !important; }
+  body { padding-bottom: 70px; }
+}
+@media (min-width: 769px) {
+  .mobile-header { display: none; }
+  .sb-overlay { display: none !important; }
+}
+
+/* ── MOBILE BOTTOM NAV ── */
+.mobile-bottom-nav {
+  display: none;
+  position: fixed; bottom: 0; left: 0; right: 0; z-index: 9999;
+  background: #f7f7f5; border-top: 1px solid #e9e9e7;
+  padding: 8px 0 env(safe-area-inset-bottom, 8px);
+}
+@media (max-width: 768px) {
+  .mobile-bottom-nav { display: flex; }
+}
+.mbn-item {
+  flex: 1; display: flex; flex-direction: column; align-items: center;
+  gap: 3px; text-decoration: none; color: #9b9a97; padding: 4px 0;
+  font-family: sans-serif;
+}
+.mbn-item.active { color: #c9a84c; }
+.mbn-icon { font-size: 1.2rem; line-height: 1; }
+.mbn-label { font-size: 0.6rem; text-transform: uppercase; letter-spacing: 0.05em; }
 </style>
 </head>
 <body>
+
+<div class="sb-overlay" id="sbOverlay" onclick="closeSidebar()"></div>
+<div class="mobile-header">
+  <button class="hamburger" onclick="toggleSidebar()">☰</button>
+  <span class="brand">Kustom Krafts</span>
+  <a href="index.html" class="mobile-home-btn">← Home</a>
+</div>
 
 <!-- ═══ SIDEBAR ═══ -->
 <nav class="sb">
@@ -186,6 +244,7 @@ table.gantt .job-label{padding:5px 10px;white-space:nowrap;min-width:180px;}
     <div class="sb-icon">KK</div>
     <div class="sb-name">Kustom Krafts</div>
   </div>
+  <a href="index.html" style="display:flex;align-items:center;gap:5px;margin:6px 12px 2px;padding:5px 8px;font-size:0.78rem;color:#9b9a97;text-decoration:none;border-radius:4px;transition:background .1s,color .1s;" onmouseover="this.style.background='#efefed';this.style.color='#37352f'" onmouseout="this.style.background='';this.style.color='#9b9a97'">← Back to Home</a>
   <div style="padding:4px 8px;">
     <div class="ni" onclick="go('home',this)"><span>🔍</span>Search</div>
     <div class="ni" onclick="go('home',this)"><span>🏠</span>Home</div>
@@ -998,5 +1057,40 @@ function toast(msg) {
   }, 2000);
 }
 </script>
+
+<script>
+function toggleSidebar() {
+  document.querySelector('.sb').classList.toggle('open');
+  document.getElementById('sbOverlay').classList.toggle('open');
+}
+function closeSidebar() {
+  document.querySelector('.sb').classList.remove('open');
+  document.getElementById('sbOverlay').classList.remove('open');
+}
+</script>
+
+<!-- MOBILE BOTTOM NAV -->
+<nav class="mobile-bottom-nav" id="mobileBottomNav">
+  <a href="index.html" class="mbn-item">
+    <span class="mbn-icon">⌂</span>
+    <span class="mbn-label">Home</span>
+  </a>
+  <a href="pitch.html" class="mbn-item">
+    <span class="mbn-icon">📊</span>
+    <span class="mbn-label">Pitch</span>
+  </a>
+  <a href="client-demo.html" class="mbn-item">
+    <span class="mbn-icon">📱</span>
+    <span class="mbn-label">Demo</span>
+  </a>
+  <a href="admin.html" class="mbn-item">
+    <span class="mbn-icon">⚒️</span>
+    <span class="mbn-label">Admin</span>
+  </a>
+  <a href="notion.html" class="mbn-item active">
+    <span class="mbn-icon">🗂️</span>
+    <span class="mbn-label">Notion</span>
+  </a>
+</nav>
 </body>
 </html>

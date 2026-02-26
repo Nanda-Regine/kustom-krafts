@@ -433,9 +433,66 @@ body{
 .page.active > *:nth-child(2){animation-delay:0.05s;}
 .page.active > *:nth-child(3){animation-delay:0.1s;}
 .page.active > *:nth-child(4){animation-delay:0.15s;}
+
+/* ── MOBILE FIXES ── */
+@media (max-width: 768px) {
+  html, body { overflow: auto !important; height: auto !important; }
+  body { display: block !important; }
+  .sidebar {
+    position: fixed; top: 0; left: 0; bottom: 0; z-index: 1000;
+    transform: translateX(-100%); transition: transform 0.3s ease;
+    height: 100vh !important;
+  }
+  .sidebar.open { transform: translateX(0); }
+  .sidebar-overlay {
+    display: none; position: fixed; inset: 0; z-index: 999;
+    background: rgba(0,0,0,0.5);
+  }
+  .sidebar-overlay.open { display: block; }
+  .mobile-header {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 12px 16px; background: #141414; border-bottom: 1px solid #272727;
+    position: sticky; top: 0; z-index: 100;
+  }
+  .mobile-header .brand { font-size: 0.9rem; font-weight: 600; color: #c9a84c; }
+  .hamburger { background: none; border: none; color: #888; font-size: 1.4rem; cursor: pointer; padding: 4px; }
+  .mobile-home-btn { font-size: 0.72rem; color: #888; text-decoration: none; border: 1px solid #2a2a2a; border-radius: 6px; padding: 4px 10px; transition: color 0.15s, border-color 0.15s; }
+  .mobile-home-btn:hover { color: #c9a84c; border-color: #c9a84c; }
+  .main { width: 100% !important; min-width: 0 !important; padding-bottom: 80px !important; }
+}
+@media (min-width: 769px) {
+  .mobile-header { display: none; }
+  .sidebar-overlay { display: none !important; }
+}
+
+/* ── MOBILE BOTTOM NAV ── */
+.mobile-bottom-nav {
+  display: none;
+  position: fixed; bottom: 0; left: 0; right: 0; z-index: 9999;
+  background: #141414; border-top: 1px solid #272727;
+  padding: 8px 0 env(safe-area-inset-bottom, 8px);
+}
+@media (max-width: 768px) {
+  .mobile-bottom-nav { display: flex; }
+}
+.mbn-item {
+  flex: 1; display: flex; flex-direction: column; align-items: center;
+  gap: 3px; text-decoration: none; color: #888; padding: 4px 0;
+  font-family: sans-serif;
+}
+.mbn-item.active { color: #c9a84c; }
+.mbn-icon { font-size: 1.2rem; line-height: 1; }
+.mbn-label { font-size: 0.6rem; text-transform: uppercase; letter-spacing: 0.05em; }
 </style>
 </head>
 <body>
+
+<div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
+<div class="mobile-header">
+  <button class="hamburger" onclick="toggleSidebar()">☰</button>
+  <span class="brand">Kustom Krafts</span>
+  <a href="index.html" class="mobile-home-btn">← Home</a>
+</div>
 
 <!-- ═══════ SIDEBAR ═══════ -->
 <aside class="sidebar">
@@ -443,6 +500,7 @@ body{
     <div class="brand-logo">KK</div>
     <div class="brand-name">Kustom Krafts</div>
     <div class="brand-sub">Admin Dashboard</div>
+    <a href="index.html" style="display:inline-flex;align-items:center;gap:4px;margin-top:10px;font-size:0.7rem;color:#666;text-decoration:none;border:1px solid #272727;border-radius:5px;padding:3px 9px;transition:color .15s,border-color .15s;" onmouseover="this.style.color='#c9a84c';this.style.borderColor='#c9a84c'" onmouseout="this.style.color='#666';this.style.borderColor='#272727'">← Back to Home</a>
   </div>
 
   <div class="sidebar-section">
@@ -1192,5 +1250,40 @@ body{
 
   buildChart();
 </script>
+
+<script>
+function toggleSidebar() {
+  document.querySelector('.sidebar').classList.toggle('open');
+  document.getElementById('sidebarOverlay').classList.toggle('open');
+}
+function closeSidebar() {
+  document.querySelector('.sidebar').classList.remove('open');
+  document.getElementById('sidebarOverlay').classList.remove('open');
+}
+</script>
+
+<!-- MOBILE BOTTOM NAV -->
+<nav class="mobile-bottom-nav" id="mobileBottomNav">
+  <a href="index.html" class="mbn-item">
+    <span class="mbn-icon">⌂</span>
+    <span class="mbn-label">Home</span>
+  </a>
+  <a href="pitch.html" class="mbn-item">
+    <span class="mbn-icon">📊</span>
+    <span class="mbn-label">Pitch</span>
+  </a>
+  <a href="client-demo.html" class="mbn-item">
+    <span class="mbn-icon">📱</span>
+    <span class="mbn-label">Demo</span>
+  </a>
+  <a href="admin.html" class="mbn-item active">
+    <span class="mbn-icon">⚒️</span>
+    <span class="mbn-label">Admin</span>
+  </a>
+  <a href="notion.html" class="mbn-item">
+    <span class="mbn-icon">🗂️</span>
+    <span class="mbn-label">Notion</span>
+  </a>
+</nav>
 </body>
 </html>
